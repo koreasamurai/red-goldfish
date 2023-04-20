@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #fish {
+        width: 50px;
+        height: 50px;
+        background-color: red;
+        position: relative;
+        animation-name: swim;
+        animation-duration: 0.5s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+      }
+
+      @keyframes swim {
+        0% {
+          transform: rotate(0deg);
+        }
+        50% {
+          transform: rotate(-45deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="fish"></div>
+    <script>
+      let fish = document.getElementById("fish");
+      let x = 0;
+      let y = 0;
+      let dx = 5;
+      let dy = 5;
+
+      setInterval(moveFish, 50);
+
+      function moveFish() {
+        x += dx;
+        y += dy;
+
+        if (x + dx > window.innerWidth - fish.clientWidth || x + dx < 0) {
+          dx = -dx;
+        }
+
+        if (y + dy > window.innerHeight - fish.clientHeight || y + dy < 0) {
+          dy = -dy;
+        }
+
+        fish.style.left = x + "px";
+        fish.style.top = y + "px";
+      }
+
+      document.addEventListener("keydown", function (event) {
+        if (event.code === "ArrowUp") {
+          dy = -5;
+          fish.style.transform = "rotate(-45deg)";
+        } else if (event.code === "ArrowDown") {
+          dy = 5;
+          fish.style.transform = "rotate(45deg)";
+        } else if (event.code === "ArrowLeft") {
+          dx = -5;
+          fish.style.transform = "scaleX(-1)";
+        } else if (event.code === "ArrowRight") {
+          dx = 5;
+          fish.style.transform = "scaleX(1)";
+        }
+      });
+
+      document.addEventListener("keyup", function (event) {
+        if (
+          event.code === "ArrowUp" ||
+          event.code === "ArrowDown" ||
+          event.code === "ArrowLeft" ||
+          event.code === "ArrowRight"
+        ) {
+          dx = 0;
+          dy = 0;
+          fish.style.transform = "rotate(0deg)";
+        }
+      });
+    </script>
+  </body>
+</html>
